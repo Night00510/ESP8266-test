@@ -97,6 +97,25 @@ void wifi_connect() {
   }
 }
 
+//LED blibking
+void LEDin_blink(){
+  static unsigned long list_millis = 0;
+  static bool state = false;
+  if(millis() - list_millis >= 500){
+    list_millis = millis();
+    state = !state;
+    digitalWrite(LED_BUILTIN, state ? LOW : HIGH);
+    digitalWrite(D0, state ? HIGH : LOW);
+    digitalWrite(D1, state ? LOW : HIGH);
+  }
+}
+
+// V0 control LED blink_mode 
+bool blink_mode = false;
+BLYNK_WRITE(V0){
+  blink_mode = param.asInt(); 
+}
+
 void setup() {
   pinMode(D0, OUTPUT);
   pinMode(D1, OUTPUT);
@@ -115,4 +134,11 @@ void setup() {
 
 void loop() {
   Blynk.run();
+  if(blink_mode){
+    LEDin_blink();
+  }else{
+    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(D0, LOW);
+    digitalWrite(D1, LOW);
+  }
 }

@@ -8,4 +8,5 @@ learning esp8266 project
 # Function
 - Connect WiFi
 - Connect Blynk.Cloud
+- Control LED blinking
 # [Blynk](https://blynk.cloud)
